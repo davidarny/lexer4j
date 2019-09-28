@@ -1,0 +1,7 @@
+2
+2
+3
+moore
+y1 y2 y2
+q0 q0 q2
+q2 q2 q1
