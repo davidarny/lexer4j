@@ -37,24 +37,24 @@ public class Main {
             if (machineType.equals("moore")) {
                 List<MooreEdge> mooreEdges = parseMoore(scanner, inputsCount, nodesCount);
                 printMooreToMealyGraph(mooreEdges);
-                printMooreToMealyTable(inputsCount, mooreEdges);
+                printMooreToMealyTable(mooreEdges);
             } else if (machineType.equals("mealy")) {
                 List<MealyEdge> mealyEdges = parseMealy(scanner, inputsCount, nodesCount);
                 printMealyToMooreGraph(mealyEdges);
-                printMealyToMooreTable(inputsCount, mealyEdges);
+                printMealyToMooreTable(mealyEdges);
             }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
-    private static void printMealyToMooreTable(Integer inputsCount, List<MealyEdge> mealyEdges) throws IOException {
+    private static void printMealyToMooreTable(List<MealyEdge> mealyEdges) throws IOException {
         File output = new File(PATH_TO_OUTPUT + "/output.txt");
         try (FileWriter writer = new FileWriter(output)) {
             Integer index = 0;
             for (MealyEdge mealyEdge : mealyEdges) {
                 writer.append(mealyEdge.to.q).append(" ");
-                if (index.equals(inputsCount - 1)) {
+                if (index.equals(mealyEdges.size() / 2 - 1)) {
                     writer.append("\n");
                 }
                 ++index;
@@ -62,13 +62,13 @@ public class Main {
         }
     }
 
-    private static void printMooreToMealyTable(Integer inputsCount, List<MooreEdge> mooreEdges) throws IOException {
+    private static void printMooreToMealyTable(List<MooreEdge> mooreEdges) throws IOException {
         File output = new File(PATH_TO_OUTPUT + "/output.txt");
         try (FileWriter writer = new FileWriter(output)) {
             Integer index = 0;
             for (MooreEdge mooreEdge : mooreEdges) {
                 writer.append(mooreEdge.to.q).append(mooreEdge.to.y).append(" ");
-                if (index.equals(inputsCount)) {
+                if (index.equals(mooreEdges.size() / 2 - 1)) {
                     writer.append("\n");
                 }
                 ++index;
@@ -112,9 +112,9 @@ public class Main {
 
     private static MealyNode findMealyNode(List<MealyNode> mealyNodes, String q) {
         Optional<MealyNode> to = mealyNodes
-                .stream()
-                .filter(mealyNode -> mealyNode.q.equals(q))
-                .findFirst();
+            .stream()
+            .filter(mealyNode -> mealyNode.q.equals(q))
+            .findFirst();
         if (to.isEmpty()) {
             throw new RuntimeException("Node " + q + " not found");
         }
@@ -164,9 +164,9 @@ public class Main {
 
     private static MooreNode findMooreNode(List<MooreNode> mooreNodes, String q) {
         Optional<MooreNode> to = mooreNodes
-                .stream()
-                .filter(mooreNode -> mooreNode.q.contains(q))
-                .findFirst();
+            .stream()
+            .filter(mooreNode -> mooreNode.q.contains(q))
+            .findFirst();
 
         if (to.isEmpty()) {
             throw new RuntimeException("Node " + " to not found");
@@ -191,15 +191,15 @@ public class Main {
         List<LinkSource> mealySources = createMealyLinkSources(mealyEdges);
 
         Graph mealyGraph = graph("Mealy Graph")
-                .directed()
-                .with(mealySources);
+            .directed()
+            .with(mealySources);
 
         try {
             Graphviz
-                    .fromGraph(mealyGraph)
-                    .width(1024)
-                    .render(Format.PNG)
-                    .toFile(new File(PATH_TO_OUTPUT + "/mealy-to-more/mealy.png"));
+                .fromGraph(mealyGraph)
+                .width(1024)
+                .render(Format.PNG)
+                .toFile(new File(PATH_TO_OUTPUT + "/mealy-to-more/mealy.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -207,15 +207,15 @@ public class Main {
         List<LinkSource> mooreSources = mealyToMoore(mealyEdges);
 
         Graph mooreGraph = graph("Moore Graph")
-                .directed()
-                .with(mooreSources);
+            .directed()
+            .with(mooreSources);
 
         try {
             Graphviz
-                    .fromGraph(mooreGraph)
-                    .width(1024)
-                    .render(Format.PNG)
-                    .toFile(new File(PATH_TO_OUTPUT + "/mealy-to-more/moore.png"));
+                .fromGraph(mooreGraph)
+                .width(1024)
+                .render(Format.PNG)
+                .toFile(new File(PATH_TO_OUTPUT + "/mealy-to-more/moore.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -225,15 +225,15 @@ public class Main {
         List<LinkSource> mooreSources = createMooreLinkSources(mooreEdges);
 
         Graph mooreGraph = graph("Moore Graph")
-                .directed()
-                .with(mooreSources);
+            .directed()
+            .with(mooreSources);
 
         try {
             Graphviz
-                    .fromGraph(mooreGraph)
-                    .width(1024)
-                    .render(Format.PNG)
-                    .toFile(new File(PATH_TO_OUTPUT + "/moore-to-mealy/moore.png"));
+                .fromGraph(mooreGraph)
+                .width(1024)
+                .render(Format.PNG)
+                .toFile(new File(PATH_TO_OUTPUT + "/moore-to-mealy/moore.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -241,15 +241,15 @@ public class Main {
         List<LinkSource> mealySources = mooreToMealy(mooreEdges);
 
         Graph mealyGraph = graph("Mealy Graph")
-                .directed()
-                .with(mealySources);
+            .directed()
+            .with(mealySources);
 
         try {
             Graphviz
-                    .fromGraph(mealyGraph)
-                    .width(1024)
-                    .render(Format.PNG)
-                    .toFile(new File(PATH_TO_OUTPUT + "/moore-to-mealy/mealy.png"));
+                .fromGraph(mealyGraph)
+                .width(1024)
+                .render(Format.PNG)
+                .toFile(new File(PATH_TO_OUTPUT + "/moore-to-mealy/mealy.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
