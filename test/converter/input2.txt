@@ -1,0 +1,12 @@
+7
+9
+44
+moore
+y2 y1 y0 y0 y2 y8 y4 y5 y0 y6 y8 y2 y8 y0 y5 y2 y8 y4 y0 y0 y6 y8 y1 y1 y0 y0 y2 y8 y4 y9 y0 y6 y8 y8 y8 y0 y5 y2 y8 y7 y0 y2 y6 y8
+q8 q0 q8 q3 q8 q0 q7 q4 q0 q5 q4 q5 q7 q8 q4 q1 q5 q1 q7 q7 q9 q1 q7 q4 q9 q10 q2 q4 q6 q6 q4 q7 q0 q5 q7 q8 q4 q1 q5 q1 q7 q7 q9 q1
+q4 q10 q5 q2 q7 q3 q0 q2 q5 q4 q5 q8 q0 q8 q3 q8 q0 q7 q4 q0 q5 q4 q8 q0 q8 q3 q8 q0 q7 q4 q0 q5 q4 q5 q7 q8 q4 q1 q5 q1 q7 q7 q9 q1
+q5 q7 q8 q4 q1 q5 q1 q7 q7 q9 q1 q7 q4 q9 q10 q2 q4 q6 q6 q4 q7 q0 q9 q3 q1 q6 q6 q7 q5 q4 q0 q10 q8 q7 q4 q9 q10 q2 q4 q6 q6 q4 q7 q0
+q7 q4 q9 q10 q2 q4 q6 q6 q4 q7 q0 q5 q7 q8 q4 q1 q5 q1 q7 q7 q9 q1 q5 q7 q8 q4 q1 q5 q1 q7 q7 q9 q1 q7 q4 q9 q10 q2 q4 q6 q6 q4 q7 q0
+q9 q3 q1 q6 q6 q7 q5 q4 q0 q10 q8 q7 q4 q9 q10 q2 q4 q6 q6 q4 q7 q0 q8 q0 q8 q3 q8 q0 q7 q4 q0 q5 q4 q5 q7 q8 q4 q1 q5 q1 q7 q7 q9 q1
+q4 q10 q5 q2 q7 q3 q0 q2 q5 q4 q5 q8 q0 q8 q3 q8 q0 q7 q4 q0 q5 q4 q8 q0 q8 q3 q8 q0 q7 q4 q0 q5 q4 q5 q7 q8 q4 q1 q5 q1 q7 q7 q9 q1
+q5 q7 q8 q4 q1 q5 q1 q7 q7 q9 q1 q7 q4 q9 q10 q2 q4 q6 q6 q4 q7 q0 q9 q3 q1 q6 q6 q7 q5 q4 q0 q10 q8 q7 q4 q9 q10 q2 q4 q6 q6 q4 q7 q0

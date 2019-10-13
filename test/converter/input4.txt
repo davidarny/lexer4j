@@ -1,0 +1,8 @@
+4
+6
+6
+mealy
+s2y5 s5y0 s2y3 s4y4 s0y5 s1y0
+s0y4 s4y4 s5y5 s0y3 s0y4 s5y0
+s2y3 s5y5 s1y0 s5y0 s0y3 s0y2
+s0y3 s2y5 s4y4 s1y5 s2y4 s2y5
