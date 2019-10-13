@@ -19,23 +19,23 @@ import static guru.nidi.graphviz.model.Factory.node;
 import static guru.nidi.graphviz.model.Link.to;
 
 public class Converter {
-    private static String PATH_TO_OUTPUT = "output";
+    private static final String PATH_TO_OUTPUT = "output/converter";
 
     public static void main(String[] args) {
         File input = new File("input.txt");
         try (FileInputStream inputStream = new FileInputStream(input)) {
             Scanner scanner = new Scanner(inputStream);
 
-            Integer inputsCount = scanner.nextInt();
+            int inputsCount = scanner.nextInt();
             scanner.nextInt();
-            Integer nodesCount = scanner.nextInt();
+            int nodesCount = scanner.nextInt();
 
             String machineType = scanner.next().trim();
 
             if (machineType.equals("moore")) {
                 List<MooreEdge> mooreEdges = parseMoore(scanner, inputsCount, nodesCount);
                 printMooreToMealyGraph(mooreEdges);
-                printMooreToMealyTable(nodesCount, mooreEdges);
+                printMooreToMealyTable(inputsCount, mooreEdges);
             } else if (machineType.equals("mealy")) {
                 List<MealyEdge> mealyEdges = parseMealy(scanner, inputsCount, nodesCount);
                 List<MooreEdge> mooreEdges = printMealyToMooreGraph(mealyEdges);
@@ -46,13 +46,15 @@ public class Converter {
         }
     }
 
-    private static void printMealyToMooreTable(Integer inputsCount, List<MooreEdge> mooreEdges) throws IOException {
+    private static void printMealyToMooreTable(int inputsCount, List<MooreEdge> mooreEdges) throws IOException {
         File output = new File(PATH_TO_OUTPUT + "/output.txt");
+
         var sortedMooreEdges = mooreEdges.stream().sorted((left, right) -> {
             int a = Integer.parseInt(left.x.substring(1));
             int b = Integer.parseInt(right.x.substring(1));
             return Integer.compare(a, b);
         }).collect(Collectors.toList());
+
         try (FileWriter writer = new FileWriter(output)) {
             int index = 0;
             for (MooreEdge mooreEdge : sortedMooreEdges) {
@@ -67,13 +69,14 @@ public class Converter {
         }
     }
 
-    private static void printMooreToMealyTable(Integer nodesCount, List<MooreEdge> mooreEdges) throws IOException {
+    private static void printMooreToMealyTable(int inputsCount, List<MooreEdge> mooreEdges) throws IOException {
         File output = new File(PATH_TO_OUTPUT + "/output.txt");
+
         try (FileWriter writer = new FileWriter(output)) {
             int index = 0;
             for (MooreEdge mooreEdge : mooreEdges) {
                 writer.append(mooreEdge.to.q).append(mooreEdge.to.y);
-                if ((index + 1) % nodesCount == 0) {
+                if ((index + 1) % (mooreEdges.size() / inputsCount) == 0) {
                     writer.append("\n");
                 } else {
                     writer.append(" ");
@@ -83,9 +86,9 @@ public class Converter {
         }
     }
 
-    private static ArrayList<MealyEdge> parseMealy(Scanner scanner, Integer inputsCount, Integer nodesCount) {
-        ArrayList<MealyNode> mealyNodes = new ArrayList<>();
-        ArrayList<MealyEdge> mealyEdges = new ArrayList<>();
+    private static List<MealyEdge> parseMealy(Scanner scanner, Integer inputsCount, Integer nodesCount) throws IOException {
+        List<MealyNode> mealyNodes = new ArrayList<>();
+        List<MealyEdge> mealyEdges = new ArrayList<>();
 
         fillMealyNodes(nodesCount, mealyNodes);
         fillMealyEdges(scanner, inputsCount, nodesCount, mealyNodes, mealyEdges);
@@ -94,13 +97,13 @@ public class Converter {
     }
 
     private static void fillMealyEdges(Scanner scanner,
-                                       Integer inputsCount,
-                                       Integer nodesCount,
+                                       int inputsCount,
+                                       int nodesCount,
                                        List<MealyNode> mealyNodes,
-                                       List<MealyEdge> mealyEdges) {
+                                       List<MealyEdge> mealyEdges) throws IOException {
         var delimiter = scanner.delimiter();
-        for (Integer i = 0; i < inputsCount; i++) {
-            for (Integer j = 0; j < nodesCount; j++) {
+        for (int i = 0; i < inputsCount; i++) {
+            for (int j = 0; j < nodesCount; j++) {
                 String q = scanner.useDelimiter("y").next().trim();
                 String y = scanner.useDelimiter(delimiter).next().trim();
 
@@ -117,19 +120,19 @@ public class Converter {
         }
     }
 
-    private static MealyNode findMealyNode(List<MealyNode> mealyNodes, String q) {
+    private static MealyNode findMealyNode(List<MealyNode> mealyNodes, String q) throws IOException {
         Optional<MealyNode> to = mealyNodes
             .stream()
             .filter(mealyNode -> mealyNode.q.equals(q))
             .findFirst();
         if (to.isEmpty()) {
-            throw new RuntimeException("Node " + q + " not found");
+            throw new IOException("Node " + q + " not found");
         }
         return to.get();
     }
 
-    private static void fillMealyNodes(Integer nodesCount, List<MealyNode> mealyNodes) {
-        for (Integer i = 0; i < nodesCount; i++) {
+    private static void fillMealyNodes(int nodesCount, List<MealyNode> mealyNodes) {
+        for (int i = 0; i < nodesCount; i++) {
             MealyNode mealyNode = new MealyNode();
 
             mealyNode.q = "s" + i;
@@ -138,7 +141,7 @@ public class Converter {
         }
     }
 
-    private static List<MooreEdge> parseMoore(Scanner scanner, Integer inputsCount, Integer nodesCount) {
+    private static List<MooreEdge> parseMoore(Scanner scanner, int inputsCount, int nodesCount) throws IOException {
         ArrayList<MooreNode> mooreNodes = new ArrayList<>();
         ArrayList<MooreEdge> mooreEdges = new ArrayList<>();
 
@@ -149,12 +152,12 @@ public class Converter {
     }
 
     private static void fillMooreEdges(Scanner scanner,
-                                       Integer inputsCount,
-                                       Integer nodesCount,
+                                       int inputsCount,
+                                       int nodesCount,
                                        List<MooreNode> mooreNodes,
-                                       List<MooreEdge> mooreEdges) {
-        for (Integer i = 0; i < inputsCount; i++) {
-            for (Integer j = 0; j < nodesCount; j++) {
+                                       List<MooreEdge> mooreEdges) throws IOException {
+        for (int i = 0; i < inputsCount; i++) {
+            for (int j = 0; j < nodesCount; j++) {
                 MooreEdge mooreEdge = new MooreEdge();
 
                 mooreEdge.x = "x" + (i + 1);
@@ -169,20 +172,20 @@ public class Converter {
         }
     }
 
-    private static MooreNode findMooreNode(List<MooreNode> mooreNodes, String q) {
+    private static MooreNode findMooreNode(List<MooreNode> mooreNodes, String q) throws IOException {
         Optional<MooreNode> to = mooreNodes
             .stream()
             .filter(mooreNode -> mooreNode.q.contains(q))
             .findFirst();
 
         if (to.isEmpty()) {
-            throw new RuntimeException("Node " + " to not found");
+            throw new IOException("Node " + " to not found");
         }
         return to.get();
     }
 
-    private static void fillMooreNodes(Scanner scanner, Integer nodesCount, List<MooreNode> mooreNodes) {
-        for (Integer i = 0; i < nodesCount; i++) {
+    private static void fillMooreNodes(Scanner scanner, int nodesCount, List<MooreNode> mooreNodes) {
+        for (int i = 0; i < nodesCount; i++) {
             MooreNode mooreNode = new MooreNode();
 
             String y = scanner.next();
@@ -315,10 +318,10 @@ public class Converter {
 
         List<MooreEdge> mooreEdges = new ArrayList<>();
 
-        HashSet<MealyEdge> uniqueMealyEdges = new HashSet<>(mealyEdges);
+        Set<MealyEdge> uniqueMealyEdges = new HashSet<>(mealyEdges);
 
-        HashMap<MooreState, String> stateToZ = new HashMap<>();
-        HashMap<String, MooreState> zToState = new HashMap<>();
+        Map<MooreState, String> stateToZ = new HashMap<>();
+        Map<String, MooreState> zToState = new HashMap<>();
 
         List<MooreNode> mooreNodes = new ArrayList<>();
 
@@ -332,13 +335,7 @@ public class Converter {
             } else {
                 int c = Integer.parseInt(left.y.substring(1));
                 int d = Integer.parseInt(right.y.substring(1));
-                if (c > d) {
-                    return 1;
-                } else if (c < d) {
-                    return -1;
-                } else {
-                    return 0;
-                }
+                return Integer.compare(c, d);
             }
         }).collect(Collectors.toList());
 
