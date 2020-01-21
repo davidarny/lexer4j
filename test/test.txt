@@ -27,7 +27,7 @@ class Foo {
             var coefficient = big * small / hex;
             println(message, num * coefficient, newline);
         }
-        var secret = hex ^ octal ^ binary
+        var secret = hex ^ octal ^ binary;
         println(secret);
     }
 }
