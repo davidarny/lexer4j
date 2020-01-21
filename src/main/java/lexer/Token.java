@@ -17,6 +17,11 @@ public class Token {
     private int to;
 
     /**
+     * Line the token belongs to
+     */
+    private int line;
+
+    /**
      * Type(category) of token
      */
     private TokenType type;
@@ -29,16 +34,18 @@ public class Token {
     /**
      * Constructs new {@code Token} object with specified parameters.
      *
+     * @param line    line the token belongs to
      * @param from    the beginning index of this token in the input, inclusive
      * @param to      the ending index of token in the input, exclusive
      * @param literal string of characters
      * @param type    type of token
      */
-    public Token(int from, int to, String literal, TokenType type) {
+    public Token(int from, int to, String literal, TokenType type, int line) {
         this.from = from;
         this.to = to;
         this.type = type;
         this.literal = literal;
+        this.line = line;
     }
 
     /**
@@ -46,7 +53,7 @@ public class Token {
      *
      * @return the ending index of token in the input, exclusive
      */
-    public int getEnd() {
+    public int getEndPosition() {
         return to;
     }
 
@@ -56,9 +63,10 @@ public class Token {
 
     @Override
     public String toString() {
-        if (isNotAuxiliary())
-            return type + "  '" + literal + "' [" + from + ";" + to + "] ";
-        else
-            return type + "   [" + from + ";" + to + "] ";
+        if (isNotAuxiliary()) {
+            return type + " '" + literal + "' [L" + line + ":" + from + "]";
+        } else {
+            return type + " [L" + line + ":" + from + "]";
+        }
     }
 }

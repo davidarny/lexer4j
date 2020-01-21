@@ -3,10 +3,7 @@ package lexer;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -58,7 +55,7 @@ public class Lexer {
         do {
             token = getNextToken(source, position);
             if (token != null) {
-                position = token.getEnd();
+                position = token.getEndPosition();
                 result.add(token);
             }
         } while (token != null && position != source.length());
@@ -67,7 +64,6 @@ public class Lexer {
         }
         return getFilteredTokens();
     }
-
 
 
     /**
@@ -102,11 +98,24 @@ public class Lexer {
             var p = Pattern.compile(".{" + from + "}" + regex.get(type), Pattern.DOTALL);
             var m = p.matcher(source);
             if (m.matches()) {
-                var lexeme = m.group(1);
-                return new Token(from, from + lexeme.length(), lexeme, type);
+                var literal = m.group(1);
+                var line = getLineNumber(source, from);
+                return new Token(from, from + literal.length(), literal, type, line);
             }
         }
         return null;
+    }
+
+    /**
+     * Splits the substring of source ranged from {@code 0} to {@code from}
+     * and returns number of {@code \n} in that part
+     *
+     * @param source source code to be scanned
+     * @param from   the index from which to start the scanning
+     * @return number of {@code \n} matched
+     */
+    private int getLineNumber(String source, int from) {
+        return source.substring(0, from).split("\n").length;
     }
 
     /**
