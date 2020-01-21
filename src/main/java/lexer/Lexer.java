@@ -31,7 +31,7 @@ public class Lexer {
 
     public static void main(String[] args) {
         var lexer = new Lexer();
-        var input = new File("input.txt");
+        var input = new File(args[0]);
         try (var stream = new FileInputStream(input)) {
             var text = new String(stream.readAllBytes());
             var tokens = lexer.tokenize(text);
