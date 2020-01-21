@@ -118,6 +118,7 @@ public class Lexer {
         regex.put(TokenType.OPENING_BRACE, "(\\().*");
         regex.put(TokenType.CLOSING_BRACE, "(\\)).*");
         regex.put(TokenType.SEMICOLON, "(;).*");
+        regex.put(TokenType.COLON, "(:).*");
         regex.put(TokenType.COMMA, "(,).*");
         regex.put(TokenType.OPENING_CURLY_BRACE, "(\\{).*");
         regex.put(TokenType.CLOSING_CURLY_BRACE, "(\\}).*");
@@ -139,6 +140,7 @@ public class Lexer {
         regex.put(TokenType.IF, "\\b(if)\\b.*");
         regex.put(TokenType.ELSE, "\\b(else)\\b.*");
         regex.put(TokenType.WHILE, "\\b(while)\\b.*");
+        regex.put(TokenType.FOR, "\\b(for)\\b.*");
         regex.put(TokenType.STATIC, "\\b(static)\\b.*");
         regex.put(TokenType.POINT, "(\\.).*");
         regex.put(TokenType.PLUS, "(\\+{1}).*");
@@ -153,5 +155,6 @@ public class Lexer {
         regex.put(TokenType.IDENTIFIER, "\\b([a-zA-Z]{1}[0-9a-zA-Z_]{0,31})\\b.*");
         regex.put(TokenType.OPENING_SQUARE_BRACE, "(\\[).*");
         regex.put(TokenType.CLOSING_SQUARE_BRACE, "(\\]).*");
+        regex.put(TokenType.VAR, "\\b(var)\\b.*");
     }
 }

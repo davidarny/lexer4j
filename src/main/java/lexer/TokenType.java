@@ -40,12 +40,15 @@ public enum TokenType {
     CLASS,
     IF,
     WHILE,
+    FOR,
     ELSE,
     SEMICOLON,
+    COLON,
     COMMA,
     IDENTIFIER,
     OPENING_SQUARE_BRACE,
-    CLOSING_SQUARE_BRACE;
+    CLOSING_SQUARE_BRACE,
+    VAR;
 
     /**
      * Determines if this token is auxiliary
