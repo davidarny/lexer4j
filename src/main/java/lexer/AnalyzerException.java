@@ -1,6 +1,7 @@
 package lexer;
 
 import lombok.SneakyThrows;
+import lombok.val;
 
 import java.io.Closeable;
 
@@ -16,7 +17,7 @@ public class AnalyzerException extends Exception {
      * and message
      */
     public AnalyzerException(String source, int position) {
-        var substring = source.substring(
+        val substring = source.substring(
             position - getStartOffsetIndex(source, position),
             position + getEndOffsetIndex(source, position)
         ).trim();
@@ -35,7 +36,7 @@ public class AnalyzerException extends Exception {
         var state = WordState.INITIAL;
         while ((position - index) != 0 && state.whitespaces != WordState.WORD_LIMIT && state != WordState.NEWLINE) {
             index++;
-            char c = source.charAt(position - index);
+            val c = source.charAt(position - index);
             state = state.next(c);
         }
         WordState.reset();
@@ -54,7 +55,7 @@ public class AnalyzerException extends Exception {
         var state = WordState.INITIAL;
         while ((position + index) != source.length() - 1 && state.whitespaces != WordState.WORD_LIMIT && state != WordState.NEWLINE) {
             index++;
-            char c = source.charAt(position + index);
+            val c = source.charAt(position + index);
             state = state.next(c);
         }
         WordState.reset();
@@ -94,7 +95,7 @@ public class AnalyzerException extends Exception {
 
             @Override
             public WordState next(char c) {
-                var next = c != ' ' ? NO_BOUND : WORD_BOUND;
+                val next = c != ' ' ? NO_BOUND : WORD_BOUND;
                 return c == '\n' ? NEWLINE : next;
             }
         },
@@ -147,10 +148,9 @@ public class AnalyzerException extends Exception {
          */
         @SneakyThrows
         public static void reset() {
-            INITIAL.close();
-            WORD_BOUND.close();
-            NO_BOUND.close();
-            NEWLINE.close();
+            for (var state : WordState.values()) {
+                state.close();
+            }
         }
 
         /**

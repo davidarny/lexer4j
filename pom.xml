@@ -14,6 +14,12 @@
     </properties>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/guru.nidi/graphviz-java -->
         <dependency>
             <groupId>guru.nidi</groupId>
