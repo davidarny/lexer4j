@@ -1,4 +1,3 @@
-
 # Created by https://www.gitignore.io/api/java,linux,macos,maven,windows,intellij+all
 # Edit at https://www.gitignore.io/?templates=java,linux,macos,maven,windows,intellij+all
 
@@ -198,4 +197,4 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/java,linux,macos,maven,windows,intellij+all
 
 input.txt
-output/
+!docs/**/*.zip
