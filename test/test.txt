@@ -2,6 +2,9 @@ class Foo {
     private double big = 3.2e+23; // Some sort of big value
     private double small = -4.70e-9; // Some sort of small value
 
+    private String message = "Foo >> ";
+    private char newline = '\n';
+
     /**
      * Multiline comment
      * Starts the program
@@ -13,10 +16,10 @@ class Foo {
         float mesh = 2.73;
         while (index != 0) {
             index = index - 1;
-            System.out.println(array[index] * big * small);
+            System.out.println(message, array[index] * big * small, newline);
         }
         for (var num : array) {
-            System.out.println(num * big * small);
+            System.out.println(message, num * big * small, newline);
         }
     }
 }

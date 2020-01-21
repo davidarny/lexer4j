@@ -51,7 +51,10 @@ public enum TokenType {
     IDENTIFIER,
     OPENING_SQUARE_BRACE,
     CLOSING_SQUARE_BRACE,
-    VAR;
+    VAR,
+    FINAL,
+    STRING_LITERAL,
+    CHAR_LITERAL;
 
     /**
      * Determines if this token is auxiliary

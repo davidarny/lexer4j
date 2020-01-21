@@ -169,5 +169,8 @@ public class Lexer {
         regex.put(TokenType.OPENING_SQUARE_BRACE, "(\\[).*");
         regex.put(TokenType.CLOSING_SQUARE_BRACE, "(\\]).*");
         regex.put(TokenType.VAR, "\\b(var)\\b.*");
+        regex.put(TokenType.FINAL, "\\b(final)\\b.*");
+        regex.put(TokenType.STRING_LITERAL, "(\\\"([^\\\\\\\"]|\\\\.)*\\\").*");
+        regex.put(TokenType.CHAR_LITERAL, "('(.{1}|\\\\n|\\\\t)').*");
     }
 }
