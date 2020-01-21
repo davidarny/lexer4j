@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -64,10 +63,12 @@ public class Lexer {
             }
         } while (token != null && position != source.length());
         if (position != source.length()) {
-            throw new AnalyzerException("Lexical error at position # " + position, position);
+            throw new AnalyzerException(source, position);
         }
         return getFilteredTokens();
     }
+
+
 
     /**
      * Returns a sequence of tokens without types {@code BlockComment},
@@ -95,14 +96,14 @@ public class Lexer {
      */
     private Token getNextToken(String source, int from) {
         if (from < 0 || from >= source.length()) {
-            throw new IllegalArgumentException("Illegal index in the input stream!");
+            throw new IllegalArgumentException("Illegal index in the input stream");
         }
-        for (TokenType tokenType : TokenType.values()) {
-            Pattern p = Pattern.compile(".{" + from + "}" + regex.get(tokenType), Pattern.DOTALL);
-            Matcher m = p.matcher(source);
+        for (var type : TokenType.values()) {
+            var p = Pattern.compile(".{" + from + "}" + regex.get(type), Pattern.DOTALL);
+            var m = p.matcher(source);
             if (m.matches()) {
-                String lexeme = m.group(1);
-                return new Token(from, from + lexeme.length(), lexeme, tokenType);
+                var lexeme = m.group(1);
+                return new Token(from, from + lexeme.length(), lexeme, type);
             }
         }
         return null;
@@ -122,11 +123,14 @@ public class Lexer {
         regex.put(TokenType.COMMA, "(,).*");
         regex.put(TokenType.OPENING_CURLY_BRACE, "(\\{).*");
         regex.put(TokenType.CLOSING_CURLY_BRACE, "(\\}).*");
+        regex.put(TokenType.SCIENTIFIC_CONSTANT, "\\b([+\\-]?0|[1-9]\\d*\\.\\d*?[eE][+\\-]?\\d+?)\\b.*");
+        regex.put(TokenType.FLOAT_CONSTANT, "\\b(\\d{1,9}\\.\\d{1,16})\\b.*");
         regex.put(TokenType.DOUBLE_CONSTANT, "\\b(\\d{1,9}\\.\\d{1,32})\\b.*");
         regex.put(TokenType.INT_CONSTANT, "\\b(\\d{1,9})\\b.*");
         regex.put(TokenType.VOID, "\\b(void)\\b.*");
         regex.put(TokenType.INT, "\\b(int)\\b.*");
-        regex.put(TokenType.DOUBLE, "\\b(int|double)\\b.*");
+        regex.put(TokenType.DOUBLE, "\\b(double)\\b.*");
+        regex.put(TokenType.FLOAT, "\\b(float)\\b.*");
         regex.put(TokenType.TAB, "(\\t).*");
         regex.put(TokenType.NEW_LINE, "(\\n).*");
         regex.put(TokenType.PUBLIC, "\\b(public)\\b.*");
