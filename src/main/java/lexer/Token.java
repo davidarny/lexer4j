@@ -64,7 +64,7 @@ public class Token {
     @Override
     public String toString() {
         if (isNotAuxiliary()) {
-            return type + " '" + literal + "' [L" + line + ":" + from + "]";
+            return type + " '" + literal.trim() + "' [L" + line + ":" + from + "]";
         } else {
             return type + " [L" + line + ":" + from + "]";
         }

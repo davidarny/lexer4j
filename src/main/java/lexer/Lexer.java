@@ -132,7 +132,7 @@ public class Lexer {
         regex.put(TokenType.COMMA, "(,).*");
         regex.put(TokenType.OPENING_CURLY_BRACE, "(\\{).*");
         regex.put(TokenType.CLOSING_CURLY_BRACE, "(\\}).*");
-        regex.put(TokenType.SCIENTIFIC_CONSTANT, "\\b([+\\-]?0|[1-9]\\d*\\.\\d*?[eE][+\\-]?\\d+?)\\b.*");
+        regex.put(TokenType.SCIENTIFIC_CONSTANT, "\\b([+\\-]?(?:0|[1-9]\\d*)(?:\\.\\d*)?(?:[eE][+\\-]?\\d+))\\b.*");
         regex.put(TokenType.FLOAT_CONSTANT, "\\b(\\d{1,9}\\.\\d{1,16})\\b.*");
         regex.put(TokenType.DOUBLE_CONSTANT, "\\b(\\d{1,9}\\.\\d{1,32})\\b.*");
         regex.put(TokenType.INT_CONSTANT, "\\b(\\d{1,9})\\b.*");

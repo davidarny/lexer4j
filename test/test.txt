@@ -10,6 +10,7 @@ class Foo {
         int size = 3;
         int [size] array = { 1, 2, 3 };
         int index = 0;
+        float mesh = 2.73;
         while (index != 0) {
             index = index - 1;
             System.out.println(array[index] * big * small);
