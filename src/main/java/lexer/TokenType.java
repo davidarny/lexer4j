@@ -62,7 +62,9 @@ public enum TokenType {
      * @return {@code true} if token is auxiliary, {@code false} otherwise
      */
     public boolean isAuxiliary() {
-        return this == NEW_LINE ||
+        return this == BLOCK_COMMENT ||
+            this == LINE_COMMENT ||
+            this == NEW_LINE ||
             this == TAB ||
             this == WHITE_SPACE;
     }
