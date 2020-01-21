@@ -10,8 +10,8 @@ public enum TokenType {
     WHITE_SPACE,
     TAB,
     NEW_LINE,
-    CLOSE_BRACE,
-    OPEN_BRACE,
+    CLOSING_BRACE,
+    OPENING_BRACE,
     OPENING_CURLY_BRACE,
     CLOSING_CURLY_BRACE,
     DOUBLE_CONSTANT,
@@ -43,7 +43,9 @@ public enum TokenType {
     ELSE,
     SEMICOLON,
     COMMA,
-    IDENTIFIER;
+    IDENTIFIER,
+    OPENING_SQUARE_BRACE,
+    CLOSING_SQUARE_BRACE;
 
     /**
      * Determines if this token is auxiliary

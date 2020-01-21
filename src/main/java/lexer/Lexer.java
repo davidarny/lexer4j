@@ -115,8 +115,8 @@ public class Lexer {
         regex.put(TokenType.BLOCK_COMMENT, "(/\\*.*?\\*/).*");
         regex.put(TokenType.LINE_COMMENT, "(//(.*?)[\r$]?\n).*");
         regex.put(TokenType.WHITE_SPACE, "( ).*");
-        regex.put(TokenType.OPEN_BRACE, "(\\().*");
-        regex.put(TokenType.CLOSE_BRACE, "(\\)).*");
+        regex.put(TokenType.OPENING_BRACE, "(\\().*");
+        regex.put(TokenType.CLOSING_BRACE, "(\\)).*");
         regex.put(TokenType.SEMICOLON, "(;).*");
         regex.put(TokenType.COMMA, "(,).*");
         regex.put(TokenType.OPENING_CURLY_BRACE, "(\\{).*");
@@ -151,5 +151,7 @@ public class Lexer {
         regex.put(TokenType.GREATER, "(>).*");
         regex.put(TokenType.LESS, "(<).*");
         regex.put(TokenType.IDENTIFIER, "\\b([a-zA-Z]{1}[0-9a-zA-Z_]{0,31})\\b.*");
+        regex.put(TokenType.OPENING_SQUARE_BRACE, "(\\[).*");
+        regex.put(TokenType.CLOSING_SQUARE_BRACE, "(\\]).*");
     }
 }
