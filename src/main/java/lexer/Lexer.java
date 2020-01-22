@@ -1,12 +1,12 @@
 package lexer;
 
 import lombok.Cleanup;
-import lombok.SneakyThrows;
 import lombok.val;
 
 import javax.annotation.Nullable;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -34,15 +34,18 @@ public class Lexer {
         result = new ArrayList<>();
     }
 
-    @SneakyThrows
     public static void main(String[] args) {
         val lexer = new Lexer();
         val input = new File(args[0]);
-        @Cleanup val stream = new FileInputStream(input);
-        val text = new String(stream.readAllBytes());
-        val tokens = lexer.tokenize(text);
-        for (var token : tokens) {
-            System.out.println(token);
+        try {
+            @Cleanup val stream = new FileInputStream(input);
+            val text = new String(stream.readAllBytes());
+            val tokens = lexer.tokenize(text);
+            for (var token : tokens) {
+                System.out.println(token);
+            }
+        } catch (IOException | AnalyzerException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -120,7 +123,7 @@ public class Lexer {
      * @return number of {@code \n} matched
      */
     private int getLineNumber(String source, int from) {
-        return source.substring(0, from).split("\n").length;
+        return source.substring(0, from + 1).split("\n").length;
     }
 
     private int getPositionInLine(String source, int line, int from) {
@@ -128,8 +131,8 @@ public class Lexer {
         var index = 0;
         var pos = from;
         while (scanner.hasNextLine() && index != line - 1) {
-            val nextLine = scanner.nextLine();
-            pos -= nextLine.length();
+            val skipped = scanner.nextLine();
+            pos -= skipped.length() + 1;
             index++;
         }
         return pos;
