@@ -7,14 +7,14 @@ package lexer;
  */
 public class Token {
     /**
-     * The beginning index of this token in the input
-     */
-    private int from;
-
-    /**
      * The ending index of token in the input
      */
     private int to;
+
+    /**
+     * Position of token on the line
+     */
+    private int position;
 
     /**
      * Line the token belongs to
@@ -35,17 +35,16 @@ public class Token {
      * Constructs new {@code Token} object with specified parameters.
      *
      * @param line    line the token belongs to
-     * @param from    the beginning index of this token in the input, inclusive
      * @param to      the ending index of token in the input, exclusive
      * @param literal string of characters
      * @param type    type of token
      */
-    public Token(int from, int to, String literal, TokenType type, int line) {
-        this.from = from;
+    public Token(int to, String literal, TokenType type, int line, int position) {
         this.to = to;
         this.type = type;
         this.literal = literal;
         this.line = line;
+        this.position = position;
     }
 
     /**
@@ -64,9 +63,9 @@ public class Token {
     @Override
     public String toString() {
         if (isNotAuxiliary()) {
-            return type + " '" + literal.trim() + "' [L" + line + ":" + from + "]";
+            return type + " '" + literal.trim() + "' [L" + line + ":" + position + "]";
         } else {
-            return type + " [L" + line + ":" + from + "]";
+            return type + " [L" + line + ":" + position + "]";
         }
     }
 }

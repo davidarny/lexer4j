@@ -57,6 +57,7 @@ public enum TokenType {
     CLOSING_SQUARE_BRACE,
     VAR,
     FINAL,
+    MULTILINE_STRING_LITERAL,
     STRING_LITERAL,
     CHAR_LITERAL;
 

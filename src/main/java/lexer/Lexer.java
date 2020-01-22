@@ -7,10 +7,7 @@ import lombok.val;
 import javax.annotation.Nullable;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -104,7 +101,8 @@ public class Lexer {
             if (m.matches()) {
                 val literal = m.group(1);
                 val line = getLineNumber(source, from);
-                return new Token(from, from + literal.length(), literal, type, line);
+                val position = getPositionInLine(source, line, from);
+                return new Token(from + literal.length(), literal, type, line, position);
             }
         }
         return null;
@@ -120,6 +118,18 @@ public class Lexer {
      */
     private int getLineNumber(String source, int from) {
         return source.substring(0, from).split("\n").length;
+    }
+
+    private int getPositionInLine(String source, int line, int from) {
+        @Cleanup val scanner = new Scanner(source);
+        var index = 0;
+        var pos = from;
+        while (scanner.hasNextLine() && index != line - 1) {
+            val nextLine = scanner.nextLine();
+            pos -= nextLine.length();
+            index++;
+        }
+        return pos;
     }
 
     /**
@@ -179,6 +189,7 @@ public class Lexer {
         regex.put(TokenType.VAR, "\\b(var)\\b.*");
         regex.put(TokenType.FINAL, "\\b(final)\\b.*");
         regex.put(TokenType.STRING_LITERAL, "(\\\"([^\\\\\\\"]|\\\\.)*\\\").*");
+        regex.put(TokenType.MULTILINE_STRING_LITERAL, "(\\\"\\\"\\\"([^\\\\\\\"]|\\\\.)*\\\"\\\"\\\").*");
         regex.put(TokenType.CHAR_LITERAL, "('(.{1}|\\\\n|\\\\t)').*");
     }
 }
