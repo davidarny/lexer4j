@@ -6,6 +6,7 @@ package lexer;
  */
 public enum TokenType {
     BLOCK_COMMENT,
+    BLOCK_COMMENT_UNTERMINATED,
     LINE_COMMENT,
     WHITE_SPACE,
     TAB,

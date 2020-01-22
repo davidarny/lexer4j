@@ -99,6 +99,9 @@ public class Lexer {
             val p = Pattern.compile(".{" + from + "}" + regex.get(type), Pattern.DOTALL);
             val m = p.matcher(source);
             if (m.matches()) {
+                if (type == TokenType.BLOCK_COMMENT_UNTERMINATED) {
+                    return null;
+                }
                 val literal = m.group(1);
                 val line = getLineNumber(source, from);
                 val position = getPositionInLine(source, line, from);
@@ -137,6 +140,7 @@ public class Lexer {
      */
     private void fillTokenMap() {
         regex.put(TokenType.BLOCK_COMMENT, "(/\\*.*?\\*/).*");
+        regex.put(TokenType.BLOCK_COMMENT_UNTERMINATED, "(/\\*.*?).*");
         regex.put(TokenType.LINE_COMMENT, "(//(.*?)[\r$]?\n).*");
         regex.put(TokenType.WHITE_SPACE, "( ).*");
         regex.put(TokenType.OPENING_BRACE, "(\\().*");
